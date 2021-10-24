@@ -1,25 +1,32 @@
 <template>
   <div>
     <h1>{{ title }}</h1>
+    <button v-if="connected" @click="changeTitle">Change Title</button>
+
     <h2>{{ description }}</h2>
+    <button v-if="connected" @click="changeDescription">Change Description</button>
+
     <h2>Join using : {{ workspace_id }}</h2>
 
     <p v-if="!connected">Connecting to realtime server...</p>
-    <ul v-else id="array-rendering">
-      <Timer
-        v-for="timer in timers"
-        :key="timer.id"
-        :id="timer.id"
-        :elapsedTime="timer.elapsedTime"
-        :status="timer.status"
-        :time="timer.time"
-        @remove-timer="remove"
-      >
-        <h3>{{ timer.title }}</h3>
-      </Timer>
-    </ul>
+    <div v-else>
+      <ul id="array-rendering">
+        <Timer
+          v-for="timer in timers"
+          :key="timer.id"
+          :id="timer.id"
+          :elapsedTime="timer.elapsedTime"
+          :status="timer.status"
+          :time="timer.time"
+          @remove-timer="remove"
+          @state-update="stateUpdate"
+        >
+          <h3>{{ timer.title }}</h3>
+        </Timer>
+      </ul>
 
-    <button @click="add()">Add</button>
+      <button @click="add()">Add</button>
+    </div>
   </div>
 </template>
 
@@ -55,27 +62,54 @@ export default {
     };
   },
   methods: {
+    changeTitle() {
+      const new_title = window.prompt("Update Title:")
+
+      if (new_title != null && new_title.length >= 5 && new_title.length <= 15) {
+        axios.put(process.env.VUE_APP_BACKEND_URL + "/workspace/" + this.$route.params.id, { title: new_title, description: this.description }).catch((err) => {
+          console.error(err)
+        })
+      } else {
+        if (new_title != null)
+          window.alert("Your title is invalid")
+      }
+    },
+    changeDescription() {
+      const new_description = window.prompt("Update Description:")
+
+      if (new_description != null && new_description.length >= 5 && new_description.length <= 50) {
+        axios.put(process.env.VUE_APP_BACKEND_URL + "/workspace/" + this.$route.params.id, { title: this.title, description: new_description }).catch((err) => {
+          console.error(err)
+        })
+      } else {
+        if (new_description != null)
+          window.alert("Your description is invalid")
+      }
+    },
     add() {
-      const timer_name = window.prompt("Nama timer baru:")
+      const timer_name = window.prompt("New Timer Name:")
 
       if (timer_name != null && timer_name.length >= 5) {
         axios.post(process.env.VUE_APP_BACKEND_URL + "/timer/workspace/" + this.$route.params.id, { title: timer_name }).catch((err) => {
           console.error(err)
         })
       }
-
-      return;
     },
     remove(id) {
       axios.delete(process.env.VUE_APP_BACKEND_URL + "/timer/workspace/" + this.$route.params.id + "/" + id).catch((err) => {
         console.error(err)
       })
+    },
+    stateUpdate({ event, detail }) {
+      this.socket.emit(event, detail);
     }
   },
   created() {
     axios.get(process.env.VUE_APP_BACKEND_URL + "/workspace/" + this.$route.params.id).then(({ data }) => {
       this.title = data.title;
       this.description = data.description;
+
+      document.title = "TVA | " + this.title
     }).catch((err) => {
       console.error(err)
       this.$router.replace({ path: "/" })
@@ -89,35 +123,36 @@ export default {
     })
 
     this.socket.on("disconnect", () => {
-      console.log("Disconnect");
-
       this.connected = false;
     });
 
     this.socket.on("connect", () => {
-      console.log("Connected");
-
       this.connected = true;
     });
 
     this.socket.on("timer:new", (data) => {
-      console.log("New timer");
-      console.log(data);
-
       this.timers.push(data);
     });
 
     this.socket.on("timer:update", (data) => {
       this.timers.forEach((val, index) => {
         if (val.id === data.id) {
+          console.log(data);
           this.timers[index] = data;
         }
       });
     });
 
-    this.socket.on("timer:delete", (timer_id) => {
-      console.log(`Delete ${timer_id}`);
+    this.socket.on("workspace:update:" + this.$route.params.id, (data) => {
+      console.log(data)
 
+      this.title = data.title;
+      this.description = data.description;
+
+      document.title = "TVA | " + this.title
+    });
+
+    this.socket.on("timer:delete", (timer_id) => {
       this.timers = this.timers.filter((val) => val.id !== timer_id);
     });
   },
