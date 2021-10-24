@@ -29,7 +29,8 @@
   </div>
 </template>
 <script>
-import $ from "jquery";
+import axios from "axios";
+
 export default {
   name: "Form",
   data() {
@@ -40,7 +41,25 @@ export default {
   },
   methods: {
     onSubmit() {
-      // ajax disini
+      console.log(process.env.VUE_APP_BACKEND_URL)
+
+      axios.post(process.env.VUE_APP_BACKEND_URL + "/workspace/", { title: this.title, description: this.description })
+        .then(({ data }) => {
+          console.log(data);
+
+          this.$router.push("/timer/" + data.id);
+        })
+        .catch((err) => {
+          if (axios.isAxiosError(err)) {
+            if (err.code === 429) {
+              window.alert("You have created too much workspace")
+            } else {
+              window.alert("System error try again later")
+            }
+          } else {
+            window.alert("System error try again later")
+          }
+        })
       console.log(this.title, this.description);
     },
   },

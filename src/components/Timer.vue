@@ -1,25 +1,25 @@
 
 <template>
   <div>
-    <h1>{{ title }}</h1>
-    <h2>{{ description }}</h2>
+    <slot></slot>
     <p>{{ id }}</p>
 
     <p class="time">{{ formatted_time }}</p>
-    <button v-if="state === 'START'" @click="pause()">PAUSE</button>
-    <button v-else-if="state !== 'START'" @click="start()">
-      {{ state === "PAUSE" ? "RESUME" : "START" }}
-    </button>
+    <button v-if="state === 'START'" @click="pause()">Pause</button>
+    <button
+      v-else-if="state !== 'START'"
+      @click="start()"
+    >{{ state === "PAUSE" ? "Resume" : "Start" }}</button>
     <button @click="stop()">Stop</button>
     <button @click="reset()">Reset</button>
-    <button @click="remove()">Remove</button>
+    <button @click="$emit('remove-timer', id)">Remove</button>
     <p v-if="result !== ''" class="time">{{ result }}</p>
   </div>
 </template>
 
 
 <script>
-import * as TimerStateDef from "/src/types/Timer-def";
+import * as TimerStateDef from "../types/Timer-def.js";
 
 function formatTime(millis) {
   const sec = Math.floor(millis / 1000);
@@ -46,12 +46,14 @@ export default {
     status: String,
     time: Number,
   },
+  emits: ["remove-timer"],
   data() {
     return {
       formatted_time: "00:00:00",
-      state: TimerStateDef.PAUSE,
-      last_epoch: 1635047129000, // ganti sesuaiin yaaa
-      millis: 0,
+      state: this.status || TimerStateDef.RESET,
+      last_epoch: this.time !== undefined ? this.time : Date.now(), // ganti sesuaiin yaaa
+      millis: this.elapsedTime !== undefined ? this.elapsedTime : 0,
+      result: undefined
     };
   },
   methods: {
@@ -72,13 +74,7 @@ export default {
     stop() {
       const formattedTime = formatTime(this.millis).split(":");
       this.result =
-        "Total waktu pengerjaan : " +
-        formattedTime[0] +
-        " jam, " +
-        formattedTime[1] +
-        " menit, " +
-        formattedTime[2] +
-        " detik";
+        `Total waktu pengerjaan : ${formattedTime[0]} jam, ${formattedTime[1]} menit, ${formattedTime[2]} detik`;
       window.clearInterval(this.interval);
 
       this.state = TimerStateDef.STOP;
@@ -96,12 +92,10 @@ export default {
 
       this.formatted_time = formatTime(0);
     },
-    remove() {
-      return;
-    },
   },
 };
 </script>
+
 <style scoped>
 /* style di sini */
 </style>

@@ -20,7 +20,7 @@ const routes = [
   },
   {
     path: "/:catchAll(.*)",
-    redirect: (to) => {
+    redirect: () => {
       // the function receives the target route as the argument
       // we return a redirect path/location here.
       return { path: "/" };
