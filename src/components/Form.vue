@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="boxform">
     <form @submit.prevent="onSubmit">
       <h1>Create Workspace</h1>
       <input
