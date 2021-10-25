@@ -1,6 +1,6 @@
 
 <template>
-  <div>
+  <div class="container">
     <slot></slot>
     <p>{{ id }}</p>
 
@@ -160,8 +160,3 @@ export default {
   },
 };
 </script>
-
-<style scoped>
-/* style di sini */
-</style>
-

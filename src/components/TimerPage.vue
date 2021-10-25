@@ -3,12 +3,13 @@
     <h1>{{ title }}</h1>
     <button v-if="connected" @click="changeTitle">Change Title</button>
 
-    <h2>{{ description }}</h2>
+    <h3>{{ description }}</h3>
     <button v-if="connected" @click="changeDescription">Change Description</button>
 
-    <h2>Join using : {{ workspace_id }}</h2>
+    <h3>Workspace id : {{ workspace_id }}</h3>
 
     <p v-if="!connected">Connecting to realtime server...</p>
+    
     <div v-else>
       <ul id="array-rendering">
         <Timer
@@ -158,7 +159,3 @@ export default {
   },
 };
 </script>
-
-<style scoped>
-/* style di sini */
-</style>
