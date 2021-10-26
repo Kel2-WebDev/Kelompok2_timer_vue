@@ -47,6 +47,31 @@
 
 <img src = UI.jpeg>
 
+### Built With
+
+<!-- GETTING STARTED -->
+## Getting Started
+
+<!-- INSTALLATION -->
+### Installation
+
+<!-- USAGE EXAMPLES -->
+## Usage
+
+<!-- ROADMAP -->
+## Roadmap
+
+<!-- CONTRIBUTING -->
+## Contributing
+
+
+<!-- LICENSE -->
+## License
+
+Distributed under the MIT License. See [LICENSE.md](https://github.com/WebDev-5/kel5-timer-jQuery/blob/main/LICENSE.md) for more information.
+
+<p align="right">(<a href="#top">back to top</a>)</p>
+
 
 ## Project setup
 ```
