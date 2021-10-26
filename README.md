@@ -66,11 +66,36 @@ To get a local copy up and running follow these simple example steps.
 
 ### Installation
 
+1. Clone the repository
+   ```sh
+   git clone https://github.com/Kel2-WebDev/Kelompok2_timer_vue
+   ```
+   and
+   ```sh
+   git clone https://github.com/Kel2-WebDev/Kelompok2_timer_backend
+   ```
+2. Install Node.js
+
+3. Install yarn by typing
+   ```sh
+   npm install -g yarn
+   ```
+4. Navigate the command prompt or terminal to the folder `/Kelompok2_timer_vue` and write the command
+   ```sh
+   yarn
+   ```
+
+5. follow README.md https://github.com/Kel2-WebDev/Kelompok2_timer_backend
+
+
 <!-- USAGE EXAMPLES -->
 ## Usage
-
-<!-- ROADMAP -->
-## Roadmap
+To use this application, you can :
+1. Create a new timer, by entering a title and then clicking the `Add` button.
+2. Use the `Play` to start the timer.
+3. Use the `Pause` to pause the timer.
+4. Use the `Restart` to restart the timer from the beginning.
+5. Use the `Stop` to stop the timer and display the total elapsed time.
 
 <!-- CONTRIBUTING -->
 ## Contributing
