@@ -46,13 +46,20 @@
 # About the Project
 
 <img src = UI.jpeg>
+POLBAN's JTK Web Developmenet tasks class 2021. This repository holds the code for the first mini-project of building a Timer with start, stop, and pause feature. Plus the challenge feature of persistent on closing the tab, and also having multiple timer with only one that runs.
+
 
 ### Built With
-
+* [HTML](https://developer.mozilla.org/en-US/docs/Web/HTML/)
+* [CSS](https://developer.mozilla.org/en-US/docs/Web/CSS)
+* [Node.js](https://nodejs.org/)
+* [Express.js](https://expressjs.com/)
+* [vue](https://vuejs.org/)
+* [PostgreSQL](https://www.postgresql.org/)
 <!-- GETTING STARTED -->
 ## Getting Started
 
-<!-- INSTALLATION -->
+
 ### Installation
 
 <!-- USAGE EXAMPLES -->
@@ -65,12 +72,12 @@
 ## Contributing
 
 
+
 <!-- LICENSE -->
 ## License
 
-Distributed under the MIT License. See [LICENSE.md](https://github.com/WebDev-5/kel5-timer-jQuery/blob/main/LICENSE.md) for more information.
+Distributed under the MIT License. See [LICENSE.md]() for more information.
 
-<p align="right">(<a href="#top">back to top</a>)</p>
 
 
 ## Project setup
