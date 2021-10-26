@@ -45,6 +45,7 @@
 
 # About the Project
 
+<img src = UI.jpeg>
 
 
 ## Project setup
