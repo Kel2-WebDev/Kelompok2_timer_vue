@@ -80,12 +80,18 @@ To get a local copy up and running follow these simple example steps.
    ```sh
    npm install -g yarn
    ```
-4. Navigate the command prompt or terminal to the folder `/Kelompok2_timer_vue` and write the command
+
+4. To install the frontend, navigate the command prompt or terminal to the folder `/Kelompok2_timer_vue` and write the command
    ```sh
    yarn
    ```
 
-5. follow README.md https://github.com/Kel2-WebDev/Kelompok2_timer_backend
+5. Start the frontend,
+   ```sh
+   yarn serve
+   ```
+
+5. Then to install and start the backend, follow [README.md of the backend](https://github.com/Kel2-WebDev/Kelompok2_timer_backend)
 
 
 <!-- USAGE EXAMPLES -->
